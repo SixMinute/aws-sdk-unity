@@ -34,6 +34,11 @@ namespace Amazon.Runtime
     public abstract partial class AmazonWebServiceClient : AbstractWebServiceClient
     {
         #region Constructors
+		
+		internal AmazonWebServiceClient(AWSCredentials credentials, ClientConfig config)
+			: base(credentials, config, AuthenticationTypes.User | AuthenticationTypes.Session)
+		{
+		}
 
         internal AmazonWebServiceClient(AWSCredentials credentials, ClientConfig config, AuthenticationTypes authenticationType)
             : base(credentials, config, authenticationType)

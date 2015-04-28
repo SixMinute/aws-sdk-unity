@@ -520,6 +520,33 @@ namespace Amazon.Util
 
             return dictionary;
         }
+		
+		internal static MemoryStream GenerateMemoryStreamFromString(string s)
+		{
+			MemoryStream stream = new MemoryStream();
+			StreamWriter writer = new StreamWriter(stream);
+			writer.Write(s);
+			writer.Flush();
+			stream.Position = 0;
+			return stream;
+		}
+		
+		internal static void CopyStream(Stream source, Stream destination, int bufferSize = 8192)
+		{
+			if (source == null)
+				throw new ArgumentNullException("source");
+			if (destination == null)
+				throw new ArgumentNullException("destination");
+			if (bufferSize <= 0)
+				throw new ArgumentOutOfRangeException("bufferSize");
+			
+			byte[] array = new byte[bufferSize];
+			int count;
+			while ((count = source.Read(array, 0, array.Length)) != 0)
+			{
+				destination.Write(array, 0, count);
+			}
+		}
 
         #endregion
 
